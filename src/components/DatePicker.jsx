@@ -1,6 +1,18 @@
 import { useState, useCallback } from 'react'
 import './DatePicker.css'
 
+// Pre-generate 1000 random sizes for true randomness without re-renders
+const RANDOM_SIZES = Array.from({ length: 1000 }, () => {
+  const sizes = ['small', 'medium', 'large']
+  return sizes[Math.floor(Math.random() * sizes.length)]
+})
+
+// Pre-generate 1000 random alignments for varied vertical positioning
+const RANDOM_ALIGNMENTS = Array.from({ length: 1000 }, () => {
+  const alignments = ['align-top', 'align-center', 'align-bottom', 'align-stretch']
+  return alignments[Math.floor(Math.random() * alignments.length)]
+})
+
 const DatePicker = ({ selectedDate, onDateSelect }) => {
   const [availableDates, setAvailableDates] = useState([new Date()])
   const [loadClickCount, setLoadClickCount] = useState(0)
@@ -76,12 +88,14 @@ const DatePicker = ({ selectedDate, onDateSelect }) => {
     return date.toDateString() === selectedDate.toDateString()
   }
 
-  const getCellSize = (date) => {
-    // Use date as seed for consistent sizing
-    const seed = date.getDate() + (date.getMonth() * 31) + (date.getFullYear() * 365)
-    const sizeIndex = seed % 3
-    const sizes = ['small', 'medium', 'large']
-    return sizes[sizeIndex]
+  const getCellSize = (index) => {
+    // Use index to get consistent random size from pre-generated array
+    return RANDOM_SIZES[index % RANDOM_SIZES.length]
+  }
+
+  const getCellAlignment = (index) => {
+    // Use index to get consistent random alignment from pre-generated array
+    return RANDOM_ALIGNMENTS[index % RANDOM_ALIGNMENTS.length]
   }
 
   const getDayOfWeek = (date) => {
@@ -214,7 +228,9 @@ const DatePicker = ({ selectedDate, onDateSelect }) => {
             <div
               key={index}
               className={`date-cell ${
-                getCellSize(date)
+                getCellSize(index)
+              } ${
+                getCellAlignment(index)
               } ${
                 isToday(date) ? 'today' : ''
               } ${

@@ -194,6 +194,23 @@
   animation: cellAppear 0.4s ease forwards;
 }
 
+/* Individual cell alignments */
+.date-cell.align-top {
+  align-self: flex-start;
+}
+
+.date-cell.align-center {
+  align-self: center;
+}
+
+.date-cell.align-bottom {
+  align-self: flex-end;
+}
+
+.date-cell.align-stretch {
+  align-self: stretch;
+}
+
 /* Adaptive sizing modes */
 .cell-datepicker.small .date-cell.small {
   width: 80px;
