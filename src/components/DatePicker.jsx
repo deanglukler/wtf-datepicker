@@ -13,6 +13,17 @@ const RANDOM_ALIGNMENTS = Array.from({ length: 1000 }, () => {
   return alignments[Math.floor(Math.random() * alignments.length)]
 })
 
+// Pre-generate 1000 random font sizes (9px to 14px) for date numbers
+const RANDOM_FONT_SIZES = Array.from({ length: 1000 }, () => {
+  // Generate 20 different sizes between 9px and 14px
+  const minSize = 9
+  const maxSize = 14
+  const steps = 20
+  const stepSize = (maxSize - minSize) / (steps - 1)
+  const randomStep = Math.floor(Math.random() * steps)
+  return Math.round(minSize + (randomStep * stepSize))
+})
+
 const DatePicker = ({ selectedDate, onDateSelect }) => {
   const [availableDates, setAvailableDates] = useState([new Date()])
   const [loadClickCount, setLoadClickCount] = useState(0)
@@ -96,6 +107,11 @@ const DatePicker = ({ selectedDate, onDateSelect }) => {
   const getCellAlignment = (index) => {
     // Use index to get consistent random alignment from pre-generated array
     return RANDOM_ALIGNMENTS[index % RANDOM_ALIGNMENTS.length]
+  }
+
+  const getCellFontSize = (index) => {
+    // Use index to get consistent random font size from pre-generated array
+    return RANDOM_FONT_SIZES[index % RANDOM_FONT_SIZES.length]
   }
 
   const getDayOfWeek = (date) => {
@@ -243,11 +259,11 @@ const DatePicker = ({ selectedDate, onDateSelect }) => {
               onMouseLeave={handleMouseLeave}
             >
               <div className="cell-content">
-                <div className="date-number">
+                <div 
+                  className="date-number"
+                  style={{ fontSize: `${getCellFontSize(index)}px` }}
+                >
                   {date.getDate()}
-                </div>
-                <div className="day-name">
-                  {getDayOfWeek(date)}
                 </div>
                 <div className="month-year">
                   {date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
@@ -256,6 +272,10 @@ const DatePicker = ({ selectedDate, onDateSelect }) => {
                   <div className="holiday">{holiday}</div>
                 )}
               </div>
+              
+              {isSelected(date) && (
+                <div className="selection-emoji">✨</div>
+              )}
             </div>
           )
         })}

@@ -386,3 +386,36 @@
   color: #fbbf24;
   text-align: center;
 }
+
+/* Selection emoji for selected dates */
+.selection-emoji {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  font-size: 18px;
+  z-index: 10;
+  animation: selectionSparkle 2s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes selectionSparkle {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+  }
+  50% {
+    transform: scale(1.1) rotate(10deg);
+  }
+}
+
+/* Responsive selection emoji sizes */
+.cell-datepicker.small .selection-emoji {
+  font-size: 14px;
+  top: 3px;
+  right: 3px;
+}
+
+.cell-datepicker.tiny .selection-emoji {
+  font-size: 10px;
+  top: 2px;
+  right: 2px;
+}
