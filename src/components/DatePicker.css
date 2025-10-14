@@ -1,0 +1,371 @@
+.cell-datepicker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  max-width: 800px;
+  width: 100%;
+}
+
+.load-more-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 25px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.load-more-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+.load-more-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.load-more-btn:disabled:hover {
+  transform: none;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.spinner {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top: 2px solid white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-right: 8px;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.date-cells {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  will-change: auto;
+  transform: translateZ(0); /* Force hardware acceleration */
+}
+
+.date-cell {
+  background: white;
+  border: 2px solid #e5e7eb;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0; /* Prevent shrinking */
+  contain: layout style; /* Optimize rendering */
+  will-change: transform; /* Optimize for transforms */
+}
+
+.date-cell:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  border-color: #6366f1;
+}
+
+.date-cell.small {
+  width: 120px;
+  height: 100px;
+}
+
+.date-cell.medium {
+  width: 160px;
+  height: 130px;
+}
+
+.date-cell.large {
+  width: 200px;
+  height: 160px;
+}
+
+.date-cell.today {
+  border-color: #f59e0b;
+  background: linear-gradient(135deg, #fef3c7 0%, #fcd34d 100%);
+}
+
+.date-cell.selected {
+  border-color: #6366f1;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  color: white;
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
+}
+
+.date-cell.holiday {
+  border-color: #10b981;
+  background: linear-gradient(135deg, #ecfdf5 0%, #a7f3d0 100%);
+}
+
+.date-cell.holiday.selected {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+}
+
+.cell-content {
+  padding: 4px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.date-number {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  line-height: 1;
+}
+
+.date-cell.small .date-number {
+  font-size: 18px;
+}
+
+.date-cell.large .date-number {
+  font-size: 26px;
+}
+
+.day-name {
+  font-size: 10px;
+  font-weight: 600;
+  margin-bottom: 2px;
+  opacity: 0.8;
+}
+
+.month-year {
+  font-size: 9px;
+  font-weight: 500;
+  opacity: 0.7;
+  margin-bottom: 3px;
+}
+
+.holiday {
+  font-size: 8px;
+  font-weight: 600;
+  padding: 2px 4px;
+  background: rgba(16, 185, 129, 0.2);
+  border-radius: 6px;
+  margin-top: 3px;
+  line-height: 1;
+}
+
+.date-cell.selected .holiday {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+@keyframes cellAppear {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.date-cell {
+  animation: cellAppear 0.4s ease forwards;
+}
+
+/* Adaptive sizing modes */
+.cell-datepicker.small .date-cell.small {
+  width: 80px;
+  height: 70px;
+}
+
+.cell-datepicker.small .date-cell.medium {
+  width: 100px;
+  height: 85px;
+}
+
+.cell-datepicker.small .date-cell.large {
+  width: 120px;
+  height: 100px;
+}
+
+.cell-datepicker.tiny .date-cell.small {
+  width: 60px;
+  height: 50px;
+}
+
+.cell-datepicker.tiny .date-cell.medium {
+  width: 75px;
+  height: 60px;
+}
+
+.cell-datepicker.tiny .date-cell.large {
+  width: 90px;
+  height: 70px;
+}
+
+/* Adaptive text sizing */
+.cell-datepicker.small .date-number {
+  font-size: 14px;
+}
+
+.cell-datepicker.small .date-cell.large .date-number {
+  font-size: 16px;
+}
+
+.cell-datepicker.tiny .date-number {
+  font-size: 10px;
+}
+
+.cell-datepicker.tiny .date-cell.large .date-number {
+  font-size: 12px;
+}
+
+.cell-datepicker.small .day-name {
+  font-size: 8px;
+}
+
+.cell-datepicker.tiny .day-name {
+  font-size: 6px;
+}
+
+.cell-datepicker.small .month-year {
+  font-size: 7px;
+}
+
+.cell-datepicker.tiny .month-year {
+  font-size: 5px;
+}
+
+.cell-datepicker.small .holiday {
+  font-size: 6px;
+  padding: 1px 3px;
+}
+
+.cell-datepicker.tiny .holiday {
+  font-size: 5px;
+  padding: 1px 2px;
+}
+
+/* Adaptive padding */
+.cell-datepicker.small .cell-content {
+  padding: 2px;
+}
+
+.cell-datepicker.tiny .cell-content {
+  padding: 1px;
+}
+
+/* Adaptive gaps */
+.cell-datepicker.small .date-cells {
+  gap: 10px;
+}
+
+.cell-datepicker.tiny .date-cells {
+  gap: 8px;
+}
+
+/* Adaptive button */
+.cell-datepicker.small .load-more-btn {
+  padding: 8px 16px;
+  font-size: 12px;
+}
+
+.cell-datepicker.tiny .load-more-btn {
+  padding: 6px 12px;
+  font-size: 10px;
+}
+
+/* Tooltip Styles */
+.date-tooltip {
+  position: fixed;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.9);
+  color: white;
+  border-radius: 12px;
+  padding: 0;
+  min-width: 250px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  animation: tooltipAppear 0.2s ease;
+  pointer-events: none;
+}
+
+@keyframes tooltipAppear {
+  from {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.tooltip-header {
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  padding: 12px 16px;
+  border-radius: 12px 12px 0 0;
+  font-weight: 600;
+  font-size: 14px;
+  text-align: center;
+}
+
+.tooltip-content {
+  padding: 12px 16px 16px 16px;
+}
+
+.tooltip-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 12px;
+}
+
+.tooltip-row:last-child {
+  margin-bottom: 0;
+}
+
+.tooltip-label {
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 500;
+}
+
+.tooltip-value {
+  color: white;
+  font-weight: 600;
+  text-align: right;
+}
+
+.tooltip-row.leap-year {
+  justify-content: center;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.tooltip-row.leap-year .tooltip-value {
+  color: #fbbf24;
+  text-align: center;
+}
