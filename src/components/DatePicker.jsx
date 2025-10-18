@@ -1,21 +1,17 @@
 import { useState, useCallback } from 'react'
 import './DatePicker.css'
 
-// Pre-generate 1000 random sizes for true randomness without re-renders
-const RANDOM_SIZES = Array.from({ length: 1000 }, () => {
+const RANDOM_SIZES = Array.from({ length: 100 }, () => {
   const sizes = ['small', 'medium', 'large']
   return sizes[Math.floor(Math.random() * sizes.length)]
 })
 
-// Pre-generate 1000 random alignments for varied vertical positioning
-const RANDOM_ALIGNMENTS = Array.from({ length: 1000 }, () => {
+const RANDOM_ALIGNMENTS = Array.from({ length: 100 }, () => {
   const alignments = ['align-top', 'align-center', 'align-bottom', 'align-stretch']
   return alignments[Math.floor(Math.random() * alignments.length)]
 })
 
-// Pre-generate 1000 random font sizes (9px to 14px) for date numbers
-const RANDOM_FONT_SIZES = Array.from({ length: 1000 }, () => {
-  // Generate 20 different sizes between 9px and 14px
+const RANDOM_FONT_SIZES = Array.from({ length: 20 }, () => {
   const minSize = 9
   const maxSize = 14
   const steps = 20

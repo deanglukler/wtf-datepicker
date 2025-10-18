@@ -2,28 +2,30 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: 'Courier New', monospace;
   max-width: 800px;
   width: 100%;
+  padding: 20px;
 }
 
 .load-more-btn {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  background: #d2691e;
+  color: #fdf6e3;
   border: none;
   padding: 12px 24px;
-  border-radius: 25px;
+  border-radius: 4px;
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
   margin-bottom: 20px;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 4px 15px rgba(210, 105, 30, 0.3);
 }
 
 .load-more-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+  background: #cd853f;
+  box-shadow: 0 6px 20px rgba(210, 105, 30, 0.4);
 }
 
 .load-more-btn:disabled {
@@ -69,23 +71,25 @@
 }
 
 .date-cell {
-  background: white;
-  border: 2px solid #e5e7eb;
-  border-radius: 16px;
+  background: #fdf6e3;
+  border: 2px solid #8b4513;
+  border-radius: 2px;
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 3px 6px rgba(139, 69, 19, 0.2);
   position: relative;
   overflow: hidden;
   flex-shrink: 0; /* Prevent shrinking */
   contain: layout style; /* Optimize rendering */
   will-change: transform; /* Optimize for transforms */
+  color: #2f1b14; /* Dark brown text for contrast */
 }
 
 .date-cell:hover {
   transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-  border-color: #6366f1;
+  box-shadow: 0 8px 16px rgba(139, 69, 19, 0.3);
+  border-color: #d2691e;
+  background: #f4f1e8;
 }
 
 .date-cell.small {
@@ -104,25 +108,28 @@
 }
 
 .date-cell.today {
-  border-color: #f59e0b;
-  background: linear-gradient(135deg, #fef3c7 0%, #fcd34d 100%);
+  border-color: #ff6347;
+  background: #ffe4e1;
+  color: #8b0000;
 }
 
 .date-cell.selected {
-  border-color: #6366f1;
-  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-  color: white;
+  border-color: #8b0000;
+  background: #dda0dd;
+  color: #2f1b14;
   transform: translateY(-3px) scale(1.05);
-  box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
+  box-shadow: 0 10px 20px rgba(139, 0, 0, 0.4);
 }
 
 .date-cell.holiday {
-  border-color: #10b981;
-  background: linear-gradient(135deg, #ecfdf5 0%, #a7f3d0 100%);
+  border-color: #228b22;
+  background: #f0fff0;
+  color: #006400;
 }
 
 .date-cell.holiday.selected {
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  background: #90ee90;
+  color: #2f1b14;
 }
 
 .cell-content {
@@ -140,6 +147,7 @@
   font-weight: 700;
   margin-bottom: 4px;
   line-height: 1;
+  color: #2f1b14; /* Ensure strong contrast */
 }
 
 .date-cell.small .date-number {
@@ -160,23 +168,25 @@
 .month-year {
   font-size: 9px;
   font-weight: 500;
-  opacity: 0.7;
+  opacity: 0.8;
   margin-bottom: 3px;
+  color: #5d2f1a; /* Slightly lighter brown for hierarchy */
 }
 
 .holiday {
   font-size: 8px;
   font-weight: 600;
   padding: 2px 4px;
-  background: rgba(16, 185, 129, 0.2);
-  border-radius: 6px;
+  background: rgba(34, 139, 34, 0.2);
+  border-radius: 2px;
   margin-top: 3px;
   line-height: 1;
+  color: #006400;
 }
 
 .date-cell.selected .holiday {
-  background: rgba(255, 255, 255, 0.2);
-  color: white;
+  background: rgba(47, 27, 20, 0.2);
+  color: #2f1b14;
 }
 
 @keyframes cellAppear {
@@ -318,12 +328,13 @@
 .date-tooltip {
   position: fixed;
   z-index: 1000;
-  background: rgba(0, 0, 0, 0.9);
-  color: white;
-  border-radius: 12px;
+  background: #8b4513;
+  color: #fdf6e3;
+  border: 2px solid #d2691e;
+  border-radius: 0;
   padding: 0;
   min-width: 250px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 6px 12px rgba(139, 69, 19, 0.4);
   animation: tooltipAppear 0.2s ease;
   pointer-events: none;
 }
@@ -361,12 +372,13 @@
 }
 
 .tooltip-header {
-  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  background: #d2691e;
   padding: 12px 16px;
-  border-radius: 12px 12px 0 0;
+  border-radius: 0;
   font-weight: 600;
   font-size: 14px;
   text-align: center;
+  color: #fdf6e3;
 }
 
 .tooltip-content {
@@ -386,12 +398,12 @@
 }
 
 .tooltip-label {
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(253, 246, 227, 0.8);
   font-weight: 500;
 }
 
 .tooltip-value {
-  color: white;
+  color: #fdf6e3;
   font-weight: 600;
   text-align: right;
 }
