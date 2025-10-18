@@ -328,6 +328,27 @@
   pointer-events: none;
 }
 
+.anchor-tooltip {
+  position: absolute;
+  position-anchor: var(--anchor-name);
+  
+  /* Primary position: to the right */
+  left: anchor(right);
+  top: anchor(top);
+  margin-left: 10px;
+  
+  /* Fallback: try left side if right clips */
+  position-try-fallbacks: --tooltip-left;
+}
+
+@position-try --tooltip-left {
+  right: anchor(left);
+  left: auto;
+  top: anchor(top);
+  margin-left: 0;
+  margin-right: 10px;
+}
+
 @keyframes tooltipAppear {
   from {
     opacity: 0;

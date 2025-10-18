@@ -197,6 +197,7 @@ const DatePicker = ({ selectedDate, onDateSelect }) => {
         const extendedInfo = getExtendedDateInfo(date)
         setTooltipData({
           ...extendedInfo,
+          anchorName: `--date-${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`,
           x: event.clientX,
           y: event.clientY
         })
@@ -254,6 +255,9 @@ const DatePicker = ({ selectedDate, onDateSelect }) => {
               } ${
                 holiday ? 'holiday' : ''
               }`}
+              style={{
+                anchorName: `--date-${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
+              }}
               onClick={() => handleDateClick(date)}
               onMouseEnter={(e) => handleMouseEnter(date, e)}
               onMouseLeave={handleMouseLeave}
@@ -283,10 +287,9 @@ const DatePicker = ({ selectedDate, onDateSelect }) => {
       
       {tooltipData && (
         <div 
-          className="date-tooltip"
+          className="date-tooltip anchor-tooltip"
           style={{
-            left: tooltipData.x + 10,
-            top: tooltipData.y - 10
+            '--anchor-name': tooltipData.anchorName
           }}
         >
           <div className="tooltip-header">{tooltipData.fullDate}</div>
