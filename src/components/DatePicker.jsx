@@ -1,8 +1,12 @@
 import { useState, useCallback } from 'react'
 import './DatePicker.css'
 
-const RANDOM_SIZES = Array.from({ length: 100 }, () => {
-  const sizes = ['small', 'medium', 'large']
+const RANDOM_SIZES = Array.from({ length: 1000 }, () => {
+  const sizes = [
+    'tiny', 'mini', 'small', 'compact', 
+    'medium-small', 'medium', 'medium-large', 
+    'large', 'big', 'huge', 'massive', 'giant'
+  ]
   return sizes[Math.floor(Math.random() * sizes.length)]
 })
 
@@ -11,9 +15,19 @@ const RANDOM_ALIGNMENTS = Array.from({ length: 100 }, () => {
   return alignments[Math.floor(Math.random() * alignments.length)]
 })
 
-const RANDOM_FONT_SIZES = Array.from({ length: 20 }, () => {
-  const minSize = 9
-  const maxSize = 14
+const RANDOM_FONT_SIZES = Array.from({ length: 1000 }, () => {
+  const minSize = 20
+  const maxSize = 40
+  const steps = 20
+  const stepSize = (maxSize - minSize) / (steps - 1)
+  const randomStep = Math.floor(Math.random() * steps)
+  return Math.round(minSize + (randomStep * stepSize))
+})
+
+// Random font sizes for month-year text
+const RANDOM_MONTH_YEAR_SIZES = Array.from({ length: 1000 }, () => {
+  const minSize = 8
+  const maxSize = 16
   const steps = 20
   const stepSize = (maxSize - minSize) / (steps - 1)
   const randomStep = Math.floor(Math.random() * steps)
@@ -108,6 +122,11 @@ const DatePicker = ({ selectedDate, onDateSelect }) => {
   const getCellFontSize = (index) => {
     // Use index to get consistent random font size from pre-generated array
     return RANDOM_FONT_SIZES[index % RANDOM_FONT_SIZES.length]
+  }
+
+  const getCellMonthYearFontSize = (index) => {
+    // Use index to get consistent random font size for month-year text
+    return RANDOM_MONTH_YEAR_SIZES[index % RANDOM_MONTH_YEAR_SIZES.length]
   }
 
   const getDayOfWeek = (date) => {
@@ -237,50 +256,86 @@ const DatePicker = ({ selectedDate, onDateSelect }) => {
       <div className="date-cells">
         {availableDates.map((date, index) => {
           const holiday = getHoliday(date)
+          const prevDate = index > 0 ? availableDates[index - 1] : null
+          const isNewMonth = prevDate && (date.getMonth() !== prevDate.getMonth() || date.getFullYear() !== prevDate.getFullYear())
+          
           return (
-            <div
-              key={index}
-              className={`date-cell ${
-                getCellSize(index)
-              } ${
-                getCellAlignment(index)
-              } ${
-                isToday(date) ? 'today' : ''
-              } ${
-                isSelected(date) ? 'selected' : ''
-              } ${
-                holiday ? 'holiday' : ''
-              }`}
-              style={{
-                anchorName: `--date-${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
-              }}
-              onClick={() => handleDateClick(date)}
-              onMouseEnter={(e) => handleMouseEnter(date, e)}
-              onMouseLeave={handleMouseLeave}
-            >
-              <div className="cell-content">
-                <div 
-                  className="date-number"
-                  style={{ fontSize: `${getCellFontSize(index)}px` }}
-                >
-                  {date.getDate()}
+            <>
+              {isNewMonth && (
+                <div className="month-break">
+                  <div className="month-break-line"></div>
+                  <div className="month-break-label">
+                    {date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
+                  </div>
+                  <div className="month-break-line"></div>
                 </div>
-                <div className="month-year">
-                  {date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
+              )}
+              
+              <div
+                className={`date-cell ${
+                  getCellSize(index)
+                } ${
+                  getCellAlignment(index)
+                } ${
+                  isToday(date) ? 'today' : ''
+                } ${
+                  isSelected(date) ? 'selected' : ''
+                } ${
+                  holiday ? 'holiday' : ''
+                }`}
+                style={{
+                  anchorName: `--date-${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
+                }}
+                onClick={() => handleDateClick(date)}
+                onMouseEnter={(e) => handleMouseEnter(date, e)}
+                onMouseLeave={handleMouseLeave}
+              >
+                <div className="cell-content">
+                  <div 
+                    className="date-number"
+                    style={{ fontSize: `${getCellFontSize(index)}px` }}
+                  >
+                    {date.getDate()}
+                  </div>
+                  <div 
+                    className="month-year"
+                    style={{ fontSize: `${getCellMonthYearFontSize(index)}px` }}
+                  >
+                    {date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
+                  </div>
+                  {holiday && (
+                    <div className="holiday">{holiday}</div>
+                  )}
                 </div>
-                {holiday && (
-                  <div className="holiday">{holiday}</div>
+                
+                {isSelected(date) && (
+                  <div className="selection-emoji">✨</div>
                 )}
               </div>
-              
-              {isSelected(date) && (
-                <div className="selection-emoji">✨</div>
-              )}
-            </div>
+            </>
           )
         })}
       </div>
       
+      {/* Floating selected date display */}
+      {selectedDate && (
+        <div className="floating-selected-date">
+          <div className="selected-date-content">
+            <div className="selected-date-day">
+              {selectedDate.getDate()}
+            </div>
+            <div className="selected-date-info">
+              <div className="selected-date-weekday">
+                {selectedDate.toLocaleDateString('en-US', { weekday: 'short' })}
+              </div>
+              <div className="selected-date-month-year">
+                {selectedDate.toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {tooltipData && (
         <div 
           className="date-tooltip anchor-tooltip"

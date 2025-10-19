@@ -92,19 +92,65 @@
   background: #f4f1e8;
 }
 
+/* 12 different cell sizes with tighter range for better cohesion */
+.date-cell.tiny {
+  width: 75px;
+  height: 48px;
+}
+
+.date-cell.mini {
+  width: 75px;
+  height: 52px;
+}
+
 .date-cell.small {
-  width: 120px;
-  height: 100px;
+  width: 77px;
+  height: 53px;
+}
+
+.date-cell.compact {
+  width: 79px;
+  height: 54px;
+}
+
+.date-cell.medium-small {
+  width: 75px;
+  height: 58px;
 }
 
 .date-cell.medium {
-  width: 160px;
-  height: 130px;
+  width: 80px;
+  height: 60px;
+}
+
+.date-cell.medium-large {
+  width: 85px;
+  height: 62px;
 }
 
 .date-cell.large {
-  width: 200px;
-  height: 160px;
+  width: 90px;
+  height: 62px;
+}
+
+.date-cell.big {
+  width: 95px;
+  height: 68px;
+}
+
+.date-cell.huge {
+  width: 94px;
+  height: 70px;
+}
+
+.date-cell.massive {
+  width: 95px;
+  height: 72px;
+}
+
+.date-cell.giant {
+  width: 99px;
+  height: 77px;
 }
 
 .date-cell.today {
@@ -143,7 +189,7 @@
 }
 
 .date-number {
-  font-size: 22px;
+  font-size: 34px;
   font-weight: 700;
   margin-bottom: 4px;
   line-height: 1;
@@ -151,11 +197,11 @@
 }
 
 .date-cell.small .date-number {
-  font-size: 18px;
+  font-size: 28px;
 }
 
 .date-cell.large .date-number {
-  font-size: 26px;
+  font-size: 38px;
 }
 
 .day-name {
@@ -166,7 +212,7 @@
 }
 
 .month-year {
-  font-size: 9px;
+  font-size: 14px;
   font-weight: 500;
   opacity: 0.8;
   margin-bottom: 3px;
@@ -174,7 +220,7 @@
 }
 
 .holiday {
-  font-size: 8px;
+  font-size: 10px;
   font-weight: 600;
   padding: 2px 4px;
   background: rgba(34, 139, 34, 0.2);
@@ -254,19 +300,19 @@
 
 /* Adaptive text sizing */
 .cell-datepicker.small .date-number {
-  font-size: 14px;
+  font-size: 24px;
 }
 
 .cell-datepicker.small .date-cell.large .date-number {
-  font-size: 16px;
+  font-size: 26px;
 }
 
 .cell-datepicker.tiny .date-number {
-  font-size: 10px;
+  font-size: 20px;
 }
 
 .cell-datepicker.tiny .date-cell.large .date-number {
-  font-size: 12px;
+  font-size: 22px;
 }
 
 .cell-datepicker.small .day-name {
@@ -278,20 +324,20 @@
 }
 
 .cell-datepicker.small .month-year {
-  font-size: 7px;
+  font-size: 9px;
 }
 
 .cell-datepicker.tiny .month-year {
-  font-size: 5px;
+  font-size: 7px;
 }
 
 .cell-datepicker.small .holiday {
-  font-size: 6px;
+  font-size: 8px;
   padding: 1px 3px;
 }
 
 .cell-datepicker.tiny .holiday {
-  font-size: 5px;
+  font-size: 7px;
   padding: 1px 2px;
 }
 
@@ -452,3 +498,137 @@
   top: 2px;
   right: 2px;
 }
+
+/* Month break styling */
+.month-break {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin: 20px 0;
+  font-family: 'Courier New', monospace;
+}
+
+.month-break-line {
+  flex: 1;
+  height: 2px;
+  background: #8b4513;
+  margin: 0 10px;
+}
+
+.month-break-label {
+  color: #d2691e;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 8px 16px;
+  background: #2f1b14;
+  border: 2px solid #d2691e;
+  border-radius: 0;
+  white-space: nowrap;
+}
+
+/* Floating selected date display */
+.floating-selected-date {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  background: #8b4513;
+  border: 2px solid #d2691e;
+  border-radius: 0;
+  box-shadow: 0 6px 12px rgba(139, 69, 19, 0.4);
+  font-family: 'Courier New', monospace;
+  animation: floatIn 0.3s ease;
+}
+
+@keyframes floatIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.selected-date-content {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  color: #fdf6e3;
+}
+
+.selected-date-day {
+  font-size: 32px;
+  font-weight: 700;
+  margin-right: 12px;
+  line-height: 1;
+  color: #d2691e;
+}
+
+.selected-date-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.selected-date-weekday {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 2px;
+  color: #fdf6e3;
+}
+
+.selected-date-month-year {
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(253, 246, 227, 0.8);
+}
+
+/* Mobile responsive design */
+@media (max-width: 768px) {
+  .floating-selected-date {
+    position: fixed;
+    top: auto;
+    bottom: 20px;
+    right: 20px;
+    left: 20px;
+    width: auto;
+  }
+  
+  .selected-date-content {
+    justify-content: center;
+    padding: 16px;
+  }
+  
+  .selected-date-day {
+    font-size: 28px;
+    margin-right: 16px;
+  }
+  
+  .selected-date-weekday {
+    font-size: 16px;
+  }
+  
+  .selected-date-month-year {
+    font-size: 14px;
+  }
+}
+
+/* Small mobile screens */
+@media (max-width: 480px) {
+  .floating-selected-date {
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+  }
+  
+  .selected-date-content {
+    padding: 12px;
+  }
+  
+  .selected-date-day {
+    font-size: 24px;
+    margin-right: 12px;
+  }
+}
+
